@@ -1,0 +1,68 @@
+super(Window, self).__init__()
+        QWidget.__init__(self)
+        layout = QGridLayout()
+        self.setLayout(layout)
+        
+        
+        
+
+       
+        
+        btn = QPushButton("Add Item")
+        btn2 = QPushButton("Remove Item")
+        btn3 = QPushButton("Edit item")
+       
+        
+        restaurants = QWidget()
+        restaurants.layout = QHBoxLayout()
+        left = QFrame()
+        left.setFrameShape(QFrame.Shape.StyledPanel)
+        left.layout = QGridLayout()
+        left.layout.addWidget(btn, 6,1)
+        left.layout.addWidget(btn2, 7,2)
+        left.layout.addWidget(btn3, 6,3)
+        
+
+        # for i in range(1,5):
+        #     for j in range(1,5):
+        #         left.layout.addWidget(QPushButton("B"+str(i)+str(j)),i,j)
+        left.setLayout(left.layout)
+       
+        
+        
+       
+        
+        
+        
+
+
+        right = QFrame()
+        right.setFrameShape(QFrame.Shape.StyledPanel)
+        splitter1 = QSplitter(Qt.Orientation.Horizontal)
+        splitter1.addWidget(left)
+        splitter1.addWidget(right)
+       
+
+        restaurants.setLayout(restaurants.layout)
+        restaurants.layout.addWidget(splitter1)
+
+
+
+
+
+        streamingServices= QWidget()
+        personalItems = QWidget()
+        groceries = QWidget()
+        bills = QWidget() 
+        summary = QWidget()
+        tabwidget = QTabWidget()
+
+        widgetArr=[restaurants, streamingServices, personalItems, groceries, bills]
+        strArr = ["Restaurants", "Streaming", "Personal Items", "Groceries", "Bills"]
+
+
+        #add tabs
+        for i in range(len(strArr)):
+            tabwidget.addTab(widgetArr[i],strArr[i])
+        tabwidget.addTab(summary, "Summary")
+        layout.addWidget(tabwidget, 0, 0)
