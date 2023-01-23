@@ -5,17 +5,34 @@ from PyQt6.QtSql import *
 import sys
 
 
-import sys
-
-
 class table(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         toolbar = QToolBar("New Bar")
-        toolButton = QToolButton()
-        toolButton.setText("Add Item")
-        toolbar.addWidget(toolButton)
+        addButton = QToolButton()
+        addButton.setText("Add Item")
+        removeButton = QToolButton()
+        removeButton.setText("Remove Item")
+        editButton = QToolButton()
+        editButton.setText("Edit Item")
+        toolbar.addWidget(addButton)
+        toolbar.addWidget(removeButton)
+        toolbar.addWidget(editButton)
         self.addToolBar(toolbar)
+    def createConnection():
+        server_name = '<connection>'
+        database_name = '<foodData>'
+        username = 'localhost'
+        password = '1283'
+        connectionString = f'DRIVER={{SQL SERVER}};'\
+                           f'SERVER={server_name};'\
+                           f'DATABASE = {database_name}'\
+                           f'UID={username};'\
+                           f'PWD={password}'
+        database= QSqlDatabase.addDatabase('QMYSQL')
+        database.setDatabaseName(connectionString)
+        
+  
         
 
         
