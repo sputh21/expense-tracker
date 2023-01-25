@@ -2,9 +2,35 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtSql import *
-import MySQLdb as mdb
+import sqlite3 as sqlite
+
+
 import sys
 
+class sqlTable(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        db = QSqlDatabase.addDatabase("QSQLITE")
+        db.setHostName("localhost")
+        db.setDatabaseName("foodData")
+        db.setUserName("localhost")
+        db.setPassword("1283")
+        ok = db.open()
+        print(db.lastError())
+
+        
+        # db = mdb.connect('localhost', 'localhost', '1283', 'foodData')
+        # db2 = QSqlDatabase(db)
+        # print("connected")
+        # qry = QSqlQuery(db2)
+        # qry.prepare("select * from food")
+        # test = qry.exec()
+        # print(qry.lastError())
+        # model = QSqlQueryModel()
+        # model.setQuery(qry)
+        # view = QTableView()
+        # view.setModel(model)
+        # view.show()
 
 class tableWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -20,16 +46,15 @@ class tableWindow(QMainWindow):
         toolbar.addWidget(removeButton)
         toolbar.addWidget(editButton)
         self.addToolBar(toolbar)
-        table = sqlTable()
+        sqlTable()
+        
+
+        
+       
   
-class sqlTable(QSqlTableModel):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        try:
-            db = mdb.connect('localhost', 'localhost', '1283', 'foodData')
-        except:
-            print("didn't connect")
-        print("connected")
+
+        
+        
         # db.setHostName("localhost")
         # db.setDatabaseName("foodData")
         # db.setUserName("localhost")

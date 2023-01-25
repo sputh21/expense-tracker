@@ -1,34 +1,35 @@
-from PyQt6.QtWidgets import *
+from PyQt6.QtSql import QSqlDatabase, QSqlQueryModel, QSqlQuery
+from PyQt6.QtWidgets import QTableView, QApplication
 import sys
+import MySQLdb as mdb
 
-class Window(QWidget):
 
-    def __init__(self):
-        QWidget.__init__(self)
-        layout = QGridLayout()
-        self.setLayout(layout)
+SERVER_NAME = '<Server Name>'
+DATABASE_NAME = '<Database Name>'
+USERNAME = ''
+PASSWORD = ''
+db = mdb.connect('localhost', 'localhost', '1283', 'foodData')
 
-        # Create pyqt toolbar
-        toolBar = QToolBar()
-        layout.addWidget(toolBar)
+def displayData(sqlStatement):
+    print('processing query...')
+    qry = QSqlQuery()
+    qry.prepare(sqlStatement)
+    qry.exec()
 
-        # Add buttons to toolbar
-        toolButton = QToolButton()
-        toolButton.setText("Apple")
-        toolButton.setCheckable(True)
-        toolButton.setAutoExclusive(True)
-        toolBar.addWidget(toolButton)
-        toolButton = QToolButton()
-        toolButton.setText("Orange")
-        toolButton.setCheckable(True)
-        toolButton.setAutoExclusive(True)
-        toolBar.addWidget(toolButton)
+    model = QSqlQueryModel()
+    model.setQuery(qry)
 
-        # Add textfield to window
-        tbox = QPlainTextEdit()
-        layout.addWidget(tbox)
+    view = QTableView()
+    view.setModel(model)
+    return view    
+
+if __name__=='__main__':
+    app = QApplication(sys.argv)
+
+    
+    SQL_STATEMENT = 'SELECT * FROM foodData'
+    dataView = displayData(SQL_STATEMENT)
+    dataView.show()
         
-app = QApplication(sys.argv)
-screen = Window()
-screen.show()
-sys.exit(app.exec())
+    app.exit()
+    sys.exit(app.exec())
