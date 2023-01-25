@@ -2,10 +2,11 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtSql import *
+import MySQLdb as mdb
 import sys
 
 
-class table(QMainWindow):
+class tableWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         toolbar = QToolBar("New Bar")
@@ -19,20 +20,24 @@ class table(QMainWindow):
         toolbar.addWidget(removeButton)
         toolbar.addWidget(editButton)
         self.addToolBar(toolbar)
-    def createConnection():
-        server_name = '<connection>'
-        database_name = '<foodData>'
-        username = 'localhost'
-        password = '1283'
-        connectionString = f'DRIVER={{SQL SERVER}};'\
-                           f'SERVER={server_name};'\
-                           f'DATABASE = {database_name}'\
-                           f'UID={username};'\
-                           f'PWD={password}'
-        database= QSqlDatabase.addDatabase('QMYSQL')
-        database.setDatabaseName(connectionString)
-        
+        table = sqlTable()
   
+class sqlTable(QSqlTableModel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        try:
+            db = mdb.connect('localhost', 'localhost', '1283', 'foodData')
+        except:
+            print("didn't connect")
+        print("connected")
+        # db.setHostName("localhost")
+        # db.setDatabaseName("foodData")
+        # db.setUserName("localhost")
+        # db.setPassword("1283")
+        # ok=db.open()
+        # print(ok)
+        # print(db.lastError())
+        
         
 
         
@@ -48,7 +53,7 @@ class tabs(QWidget):
         left = QFrame()
         left.setFrameShape(QFrame.Shape.StyledPanel)
         left.layout=QHBoxLayout()
-        newTool = table()
+        newTool = tableWindow()
         left.layout.addWidget(newTool)
         left.setLayout(left.layout)
         
