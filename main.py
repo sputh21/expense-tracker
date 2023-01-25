@@ -23,14 +23,16 @@ class tableWindow(QMainWindow):
         toolbar.addWidget(removeButton)
         toolbar.addWidget(editButton)
         self.addToolBar(toolbar)
-        self.displayData()
+        
         self.table = QTableWidget()
-        self.table.setColumnCount(3)
+        self.table.setColumnCount(1)
         self.table.setColumnWidth(0,250)
         self.table.setColumnWidth(1,100)
         self.table.setColumnWidth(2,350)
-        self.table.setHorizontalHeaderLabels(["foodName"])
+        self.table.setHorizontalHeaderLabels(["restaurant"])
+        self.table.setRowCount(4)
         self.setCentralWidget(self.table)
+        self.displayData()
     def displayData(self):       
         db = sqlite.connect("food.db")
         cursor = db.cursor()
@@ -38,8 +40,13 @@ class tableWindow(QMainWindow):
         #cursor.execute("""INSERT INTO food VALUES('ford')""")
         db.commit()
         res=cursor.execute("SELECT * from food")
+        tablerow=0
         for row in res:
             print(row)
+            self.table.setItem(tablerow,0, QTableWidgetItem(row[0]))
+            tablerow=tablerow+1
+            
+            
         
 
         
