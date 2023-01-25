@@ -7,30 +7,7 @@ import sqlite3 as sqlite
 
 import sys
 
-class sqlTable(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        db = QSqlDatabase.addDatabase("QSQLITE")
-        db.setHostName("localhost")
-        db.setDatabaseName("foodData")
-        db.setUserName("localhost")
-        db.setPassword("1283")
-        ok = db.open()
-        print(db.lastError())
 
-        
-        # db = mdb.connect('localhost', 'localhost', '1283', 'foodData')
-        # db2 = QSqlDatabase(db)
-        # print("connected")
-        # qry = QSqlQuery(db2)
-        # qry.prepare("select * from food")
-        # test = qry.exec()
-        # print(qry.lastError())
-        # model = QSqlQueryModel()
-        # model.setQuery(qry)
-        # view = QTableView()
-        # view.setModel(model)
-        # view.show()
 
 class tableWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -46,7 +23,28 @@ class tableWindow(QMainWindow):
         toolbar.addWidget(removeButton)
         toolbar.addWidget(editButton)
         self.addToolBar(toolbar)
-        sqlTable()
+        self.displayData()
+        self.table = QTableWidget()
+        self.table.setColumnCount(3)
+        self.table.setColumnWidth(0,250)
+        self.table.setColumnWidth(1,100)
+        self.table.setColumnWidth(2,350)
+        self.table.setHorizontalHeaderLabels(["foodName"])
+        self.setCentralWidget(self.table)
+    def displayData(self):       
+        db = sqlite.connect("food.db")
+        cursor = db.cursor()
+        cursor.execute('create table if not exists food(name varchar(255));')
+        #cursor.execute("""INSERT INTO food VALUES('ford')""")
+        db.commit()
+        res=cursor.execute("SELECT * from food")
+        for row in res:
+            print(row)
+        
+
+        
+        
+
         
 
         
@@ -128,7 +126,9 @@ class Window(QMainWindow):
 
 app = QApplication(sys.argv)
 screen = Window()
-screen.show()
+widget = QStackedWidget()
+widget.addWidget(screen)
+widget.show()
 sys.exit(app.exec())
         
 
