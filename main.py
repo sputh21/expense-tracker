@@ -2,75 +2,11 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
 from PyQt6.QtSql import *
-import sqlite3 as sqlite
+import tableW 
+
 
 
 import sys
-
-
-
-class tableWindow(QMainWindow):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        toolbar = QToolBar("New Bar")
-        addButton = QToolButton()
-        addButton.setText("Add Item")
-        removeButton = QToolButton()
-        removeButton.setText("Remove Item")
-        editButton = QToolButton()
-        editButton.setText("Edit Item")
-        toolbar.addWidget(addButton)
-        toolbar.addWidget(removeButton)
-        toolbar.addWidget(editButton)
-        self.addToolBar(toolbar)
-        
-        self.table = QTableWidget()
-        self.table.setColumnCount(1)
-        self.table.setColumnWidth(0,250)
-        self.table.setColumnWidth(1,100)
-        self.table.setColumnWidth(2,350)
-        self.table.setHorizontalHeaderLabels(["restaurant"])
-        self.table.setRowCount(4)
-        self.setCentralWidget(self.table)
-        self.displayData()
-    def displayData(self):       
-        db = sqlite.connect("food.db")
-        cursor = db.cursor()
-        cursor.execute('create table if not exists food(name varchar(255));')
-        #cursor.execute("""INSERT INTO food VALUES('ford')""")
-        db.commit()
-        res=cursor.execute("SELECT * from food")
-        tablerow=0
-        for row in res:
-            print(row)
-            self.table.setItem(tablerow,0, QTableWidgetItem(row[0]))
-            tablerow=tablerow+1
-            
-            
-        
-
-        
-        
-
-        
-
-        
-       
-  
-
-        
-        
-        # db.setHostName("localhost")
-        # db.setDatabaseName("foodData")
-        # db.setUserName("localhost")
-        # db.setPassword("1283")
-        # ok=db.open()
-        # print(ok)
-        # print(db.lastError())
-        
-        
-
-        
 
 class tabs(QWidget):
     def __init__(self):
@@ -83,7 +19,7 @@ class tabs(QWidget):
         left = QFrame()
         left.setFrameShape(QFrame.Shape.StyledPanel)
         left.layout=QHBoxLayout()
-        newTool = tableWindow()
+        newTool = tableW.tableWindow()
         left.layout.addWidget(newTool)
         left.setLayout(left.layout)
         
@@ -124,11 +60,6 @@ class Window(QMainWindow):
         self.setWindowTitle("Example")
         tabsWidget = tabs()
         self.setCentralWidget(tabsWidget)
-
-
-
-
-
 
 
 app = QApplication(sys.argv)
