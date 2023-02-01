@@ -13,13 +13,13 @@ class tabs(QWidget):
         QWidget.__init__(self)
         layout = QGridLayout()
         self.setLayout(layout)
-
+        #######################################################
         restaurants = QWidget()
         restaurants.layout = QHBoxLayout()
         left = QFrame()
         left.setFrameShape(QFrame.Shape.StyledPanel)
         left.layout=QHBoxLayout()
-        newTool = tableW.tableWindow()
+        newTool = tableW.foodTableWindow()
         left.layout.addWidget(newTool)
         left.setLayout(left.layout)
         
@@ -28,18 +28,59 @@ class tabs(QWidget):
         right.layout=QHBoxLayout()
         right.setLayout(right.layout)
 
-
         splitter1 = QSplitter(Qt.Orientation.Horizontal)
         splitter1.addWidget(left)
         splitter1.addWidget(right)
        
         restaurants.setLayout(restaurants.layout)
         restaurants.layout.addWidget(splitter1)
-
+        #########################################################
         streamingServices= QWidget()
+        streamingServices.layout = QHBoxLayout()
+        left = QFrame()
+        left.setFrameShape(QFrame.Shape.StyledPanel)
+        left.layout=QHBoxLayout()
+        newTool = tableW.streaming()
+        left.layout.addWidget(newTool)
+        left.setLayout(left.layout)
+        
+        right = QFrame()
+        right.setFrameShape(QFrame.Shape.StyledPanel)
+        right.layout=QHBoxLayout()
+        right.setLayout(right.layout)
+
+        splitter1 = QSplitter(Qt.Orientation.Horizontal)
+        splitter1.addWidget(left)
+        splitter1.addWidget(right)
+
+        streamingServices.setLayout(streamingServices.layout)
+        streamingServices.layout.addWidget(splitter1)
+        ############################################################
         personalItems = QWidget()
+        personalItems.layout = QHBoxLayout()
+        left = QFrame()
+        left.setFrameShape(QFrame.Shape.StyledPanel)
+        left.layout=QHBoxLayout()
+        newTool = tableW.personal()
+        left.layout.addWidget(newTool)
+        left.setLayout(left.layout)
+
+        right = QFrame()
+        right.setFrameShape(QFrame.Shape.StyledPanel)
+        right.layout=QHBoxLayout()
+        right.setLayout(right.layout)
+
+        splitter1 = QSplitter(Qt.Orientation.Horizontal)
+        splitter1.addWidget(left)
+        splitter1.addWidget(right)
+
+        personalItems.setLayout(personalItems.layout)
+        personalItems.layout.addWidget(splitter1)
+        ############################################################
         groceries = QWidget()
+        ###########################################################
         bills = QWidget() 
+        ###########################################################
         summary = QWidget()
         tabWidget = QTabWidget()
 
